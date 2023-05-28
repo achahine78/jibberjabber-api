@@ -26,6 +26,14 @@ export const login = async (req, res) => {
     },
   });
 
+  if (!user) {
+    res.status(401);
+    res.json({
+      message: "Invalid username and password combination",
+    });
+    return;
+  }
+
   const isValid = await comparePasswords(password, user.password);
 
   if (!isValid) {
@@ -33,6 +41,7 @@ export const login = async (req, res) => {
     res.json({
       message: "Invalid username and password combination",
     });
+    return;
   }
 
   const token = createJWT(user);
