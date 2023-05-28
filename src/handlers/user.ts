@@ -42,6 +42,18 @@ export const createUser = async (req, res) => {
 };
 
 export const login = async (req, res) => {
+  if (!req.body.username) {
+    res.status(422);
+    res.json({ message: "Username field is missing." })
+    return;
+  }
+
+  if (!req.body.password) {
+    res.status(422);
+    res.json({ message: "Password field is missing." })
+    return;
+  }
+
   const username = req.body.username;
   const password = req.body.password;
   const user = await prisma.user.findUnique({
