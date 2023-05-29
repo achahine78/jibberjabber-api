@@ -63,3 +63,16 @@ export const getPost = async (req, res) => {
     return;
   }
 };
+
+export const getAllPosts = async (req, res) => {
+  try {
+    const posts = await prisma.post.findMany();
+    res.json({ posts });
+  } catch (e) {
+    res.status(500);
+    res.json({
+      message: "Internal server error",
+    });
+    return;
+  }
+};

@@ -1,11 +1,9 @@
 import { Router } from "express";
-import { createPost, getPost } from "./handlers/post";
+import { createPost, getAllPosts, getPost } from "./handlers/post";
 
 const router = Router();
 
-router.get("/post", async (req, res) => {
-
-});
+router.get("/post", getAllPosts);
 
 router.get("/post/:id", getPost);
 
