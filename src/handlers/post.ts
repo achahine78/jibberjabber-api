@@ -30,3 +30,36 @@ export const createPost = async (req, res) => {
     return;
   }
 };
+
+export const getPost = async (req, res) => {
+  if (!req.params.id) {
+    res.status(422);
+    res.json({ message: "id field is missing." });
+    return;
+  }
+
+  try {
+    const post = await prisma.post.findUnique({
+      where: {
+        id: req.params.id,
+      },
+    });
+
+    if (!post) {
+      res.status(404);
+      res.json({
+        message: "Post not found",
+      });
+      return;
+    }
+
+    res.json({ post });
+    return;
+  } catch (e) {
+    res.status(404);
+    res.json({
+      message: "Post not found",
+    });
+    return;
+  }
+};

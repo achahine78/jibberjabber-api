@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createPost } from "./handlers/post";
+import { createPost, getPost } from "./handlers/post";
 
 const router = Router();
 
@@ -7,7 +7,7 @@ router.get("/post", async (req, res) => {
 
 });
 
-router.get("/post/:id", (req, res) => {});
+router.get("/post/:id", getPost);
 
 router.post("/post", createPost);
 
