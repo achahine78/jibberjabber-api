@@ -23,9 +23,9 @@ export const createPost = async (req, res) => {
     });
     res.json({ post });
   } catch (e) {
-    res.status(401);
+    res.status(500);
     res.json({
-      message: "Invalid post",
+      message: "Internal server error",
     });
     return;
   }
@@ -56,9 +56,9 @@ export const getPost = async (req, res) => {
     res.json({ post });
     return;
   } catch (e) {
-    res.status(404);
+    res.status(500);
     res.json({
-      message: "Post not found",
+      message: "Internal server error",
     });
     return;
   }
