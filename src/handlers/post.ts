@@ -54,6 +54,7 @@ export const getPost = async (req, res) => {
     res.json({ post });
     return;
   } catch (e) {
+    console.log(e)
     res.status(500);
     res.json({
       message: "Internal server error",
