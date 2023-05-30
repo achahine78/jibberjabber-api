@@ -17,8 +17,6 @@ export const createPost = async (req, res) => {
       data: {
         content: req.body.content,
         createdById: id,
-        upvotes: 0,
-        downvotes: 0,
       },
     });
     res.json({ post });
