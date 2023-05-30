@@ -41,6 +41,10 @@ export const getPost = async (req, res) => {
       where: {
         id: req.params.id,
       },
+      include: {
+        upvotes: true,
+        downvotes: true,
+      },
     });
 
     if (!post) {
@@ -51,10 +55,14 @@ export const getPost = async (req, res) => {
       return;
     }
 
-    res.json({ post });
+    res.json({
+      ...post,
+      upvotes: post.upvotes.length,
+      downvotes: post.downvotes.length,
+    });
     return;
   } catch (e) {
-    console.log(e)
+    console.log(e);
     res.status(500);
     res.json({
       message: "Internal server error",
@@ -65,8 +73,18 @@ export const getPost = async (req, res) => {
 
 export const getAllPosts = async (req, res) => {
   try {
-    const posts = await prisma.post.findMany();
-    res.json({ posts });
+    const posts = await prisma.post.findMany({
+      include: {
+        upvotes: true,
+        downvotes: true,
+      },
+    });
+    const postsWithVotesCounted = posts?.map((post) => ({
+      ...post,
+      upvotes: post.upvotes.length,
+      downvotes: post.downvotes.length,
+    }));
+    res.json({ posts: postsWithVotesCounted });
   } catch (e) {
     res.status(500);
     res.json({
